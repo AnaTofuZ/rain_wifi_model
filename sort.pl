@@ -14,15 +14,15 @@ for  my $roop (@directory){
     for (01..31){
         $_ = sprintf("%02d",$_);
         my $name = $roop."/".$roop.$_;
-        &count($Ghz18,$name);
-        &count($Ghz26,$name);
+        &count($Ghz18,$name,1);
+        &count($Ghz26,$name,0);
     }
 }
 
 sub count{ 
 
 
-    my($Ghz,$path) = @_;
+    my($Ghz,$path,$flag) = @_;
 
     my @array_hour =();
     my @array_min = ();
@@ -76,6 +76,15 @@ sub count{
     #        print "$goal\n";
     #        print "$second\n";
          $sum /=($count+1);
+
+         if($flag == 1){
+            
+             $sum += 256 if $sum <0;
+             $sum /=2;
+             $sum -= 121;
+         }
+
+
          $result->{"$f_hour".":"."$f_min".":"."$f_second"}="$sum";
          $count=0;
          next;
