@@ -39,14 +39,13 @@ sub sumGhz18 {
 
    while (<IN>) {
        chomp;
-       my $now =(split / /,$_)[1];  
-       $now = int($now/5);
-       $now *=5;
-       $result->{$now}++;
+       $_ =(split / /,$_)[1];  
+       $_=5*int($_/5);
+       $result->{$_}++;
    } 
    close IN;
 }
 
-#sub sumGhz26 {
-#    
-#}
+sub sumGhz26 {
+    
+}
