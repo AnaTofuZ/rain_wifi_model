@@ -16,17 +16,28 @@ for (@total){
 sub rian_data{
     my($txtname) = @_;
 
+    $txtname = "RainData/$txtname";
+
     if(! -e $txtname){
         return;
     }
 
-    open(IN,$txtname);
+#    open(IN,$txtname);
 
     my $count = 1;
     my $result ={};
     my $rain_sum = 0;
     my $time_b;
      
+    
+    for  (0..250){
+        next if $_ %5 !=0;
+        $result->{$_}=0;
+    }
+
+
+    print Dumper $result;
+=comment
     while(<IN>){
         chomp;
 
@@ -60,4 +71,5 @@ sub rian_data{
         }
 #print OUT Dumper($result);
     close(OUT);
+=cut
 }
