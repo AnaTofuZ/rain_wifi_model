@@ -20,7 +20,8 @@ sub rian_data{
     my($txtname,$num) = @_;
 
     if(! -e $txtname){
-        return;
+       &notFilesystem($num);
+       return;
     }
 
     open(IN,$txtname);
@@ -60,8 +61,23 @@ sub rian_data{
     open(OUT,"> $textfile");
 
         for my $key(sort keys %$result){
-            printf(OUT "%s %s\n",$key,$result->{$key});
+            printf(OUT "%s\n",$result->{$key});
         }
 #print OUT Dumper($result);
+    close(OUT);
+}
+
+
+sub notFilesystem {
+    my ($textname) = @_;
+
+    $textname .= ".txt";
+
+    open(OUT,"> $textname");
+
+    for (0..23){
+        printf(OUT "%s\n",0);
+    }
+
     close(OUT);
 }
