@@ -23,16 +23,14 @@ sub rian_data{
 
     open(IN,$txtname);
 
-    my $count = 1;
+    my $count = 0;
     my $result ={};
-    my $rain_sum = 0;
-    my $time_b;
-     
     
     for  (0..250){
         next if $_ %5 !=0;
         $result->{$_}=0;
     }
+
 
 
     while(<IN>){
@@ -42,9 +40,12 @@ sub rian_data{
 
         $result->{$default}++;
 
+        $count++;
     }
 
     close(IN);
+
+    $result->{0}+=(24 - $count) if $count == 24;
 
     my($txtname2) = @_;
     $txtname2 = "RainData/RAIN/$txtname2";
