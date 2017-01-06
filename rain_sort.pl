@@ -5,8 +5,8 @@ use utf8;
 use Data::Dumper;
 
 
-my @total =(20090601..20090630,20091002..20091031,20091101..20091130,20091201..20091230);
-
+#my @total =(20090601..20090630,20091002..20091031,20091101..20091130,20091201..20091230);
+my @total = (20090601);
 
 for (@total){
     rian_data("$_.txt");
@@ -22,7 +22,7 @@ sub rian_data{
         return;
     }
 
-#    open(IN,$txtname);
+    open(IN,$txtname);
 
     my $count = 1;
     my $result ={};
@@ -36,40 +36,17 @@ sub rian_data{
     }
 
 
-    print Dumper $result;
-=comment
     while(<IN>){
         chomp;
+        my $default =int($_/5);
+        $default *= 5;
 
-        my($day,$time_r) = split / /,$_;
-        my($time,$rain) = split /,/,$time_r;
+        $result->{$default}++;
 
-        if($count == 1){
-            $time_b = $time;}
-
-        $rain_sum += $rain;
-
-        if($count == 60){
-            $rain_sum*=0.0083333;
-            $rain_sum*=60;
-            $result->{"$time_b"}=sprintf('%.2f',$rain_sum);
-            $count =0;
-            $rain_sum =0;
-        }
-
-        $count++;
-        
     }
+
+    print Dumper $result;
 
     close(IN);
 
-    my $textfile = "$num.txt";
-    open(OUT,"> $textfile");
-
-        for my $key(sort keys %$result){
-            printf(OUT "%s\n",$result->{$key});
-        }
-#print OUT Dumper($result);
-    close(OUT);
-=cut
 }
