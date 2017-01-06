@@ -7,7 +7,7 @@ use Data::Dumper;
 my $sum ={};
 
 for(0..250){
-    next if $_ %5 !=0;
+    next if $_ %3 !=0;
     $sum->{$_}=0;
 }
 
@@ -30,15 +30,13 @@ sub rian_data{
 
     open(IN,$txtname);
 
-#    my $result ={};
     my $count = 0;
-    
 
 
     while(<IN>){
         chomp;
-        my $default =int($_/5);
-        $default *= 5;
+        my $default =int($_/3);
+        $default *= 3;
 
         $result->{$default}++;
 
@@ -49,18 +47,4 @@ sub rian_data{
 
     $result->{0}+=(24 - $count) if $count == 24;
 
-=comment
-    my($txtname2) = @_;
-    $txtname2 = "RainData/RAIN/$txtname2";
-
-    open(OUT,"> $txtname2");
-
-    for my $key(sort keys %$result) {
-       printf(OUT "%s\n",$result->{$key});
-    }
-
-
-    close(OUT);
-
-=cut
 }
