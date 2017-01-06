@@ -45,8 +45,17 @@ sub rian_data{
 
     }
 
-    print Dumper $result;
-
     close(IN);
+
+    $txtname = "$txtname.log";
+
+    open(OUT,"> $txtname");
+
+    for my $key(sort keys %$result) {
+       printf(OUT "%s\n",$result->{$key});
+    }
+
+
+    close(OUT);
 
 }
