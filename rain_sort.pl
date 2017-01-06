@@ -5,8 +5,7 @@ use utf8;
 use Data::Dumper;
 
 
-#my @total =(20090601..20090630,20091002..20091031,20091101..20091130,20091201..20091230);
-my @total = (20090601);
+my @total =(20090601..20090630,20091002..20091031,20091101..20091130,20091201..20091230);
 
 for (@total){
     rian_data("$_.txt");
@@ -47,9 +46,10 @@ sub rian_data{
 
     close(IN);
 
-    $txtname = "$txtname.log";
+    my($txtname2) = @_;
+    $txtname2 = "RainData/RAIN/$txtname2";
 
-    open(OUT,"> $txtname");
+    open(OUT,"> $txtname2");
 
     for my $key(sort keys %$result) {
        printf(OUT "%s\n",$result->{$key});
