@@ -46,6 +46,6 @@ sub sumGhz18 {
    close IN;
 }
 
-sub sumGhz26 {
-    
-}
+#sub sumGhz26 {
+#    
+#}
