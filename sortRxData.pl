@@ -46,6 +46,17 @@ sub sumGhz18 {
    close IN;
 }
 
-#sub sumGhz26 {
-#    
-#}
+sub sumGhz26 {
+    my($path,$result) = @_;
+
+    open(IN,"RxData/$path/192.168.100.9_csv_sort.log");
+
+   while (<IN>) {
+       chomp;
+        $_ =(split / /,$_)[1];
+        $_=5*int($_/5);
+        $result->{$_}++;
+    }
+    close IN;
+
+}
