@@ -49,7 +49,7 @@ sub sumGhz18 {
 sub sumGhz26 {
     my($path,$result) = @_;
 
-    open(IN,"RxData/$path/192.168.100.9_csv_sort.log");
+    open(IN,"RxData/$path/$Ghz26_csv_sort.log");
 
    while (<IN>) {
        chomp;
