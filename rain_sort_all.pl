@@ -24,7 +24,13 @@ my $sumRain = &makeSum($sum);
 
 &makePers($sum,$sumRain);
 
-print Dumper $sum;
+open(OUT,"> sortRain.txt");
+
+for my $key (sort {$b <=> $a} keys %$sum){
+    printf (OUT "%s %s\n",$key,$sum->{$key});
+}
+
+close(OUT);
 
 sub rian_data{
     my($txtname,$result) = @_;

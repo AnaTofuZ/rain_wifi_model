@@ -44,6 +44,9 @@ my $MaxGhz26 = &makeSum($sumGhz26);
 print Dumper $sumGhz18;
 print Dumper $sumGhz26;
 
+&outPut($sumGhz18,"sumGhz18");
+&outPut($sumGhz26,"sumGhz26");
+
 sub sumGhz18 {
 
     my($path,$result) = @_;
@@ -105,4 +108,17 @@ sub makePers {
     for my $key(sort {$b <=> $a} keys %$result){
         $result->{$key}=sprintf("%.5f",$result->{$key}/=$sum)
     }
+}
+
+sub outPut {
+
+    my ($result,$name) = @_;
+
+    open(OUT,"> $name"."Sort.txt");
+
+    for my $key(sort {$b <=> $a} keys %$result){
+        printf(OUT "%s %s\n",$key,$result->{$key});
+    }
+
+    close(OUT);
 }
