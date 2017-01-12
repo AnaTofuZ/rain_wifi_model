@@ -117,7 +117,7 @@ sub outPut {
     open(OUT,"> $name"."Sort.txt");
 
     for my $key(sort {$b <=> $a} keys %$result){
-        printf(OUT "%s %s\n",$key,$result->{$key});
+        printf(OUT "%s %s\n",$result->{$key}*100,$key);
     }
 
     close(OUT);

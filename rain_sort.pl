@@ -52,8 +52,8 @@ sub rian_data{
 
     open(OUT,"> $txtname2");
 
-    for my $key(sort keys %$result) {
-       printf(OUT "%s\n",$result->{$key});
+    for my $key(sort {$a <=> $b} keys %$result) {
+       printf(OUT "%s %s\n",$key,$result->{$key});
     }
 
 
