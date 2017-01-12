@@ -15,7 +15,7 @@ use constant directory =>(200906,200910,200911,200912);
 my $sumGhz18 = {};
 my $sumGhz26 = {};
 
-my $stride = 5;
+my $stride = 1;
 
 for  (-100..0){
     next if $_ % $stride!= 0;
@@ -39,12 +39,15 @@ sub sumGhz18 {
 
     my($path,$result) = @_;
 
+    return if(! -e "RxData/$path/".Ghz18."_csv_sort.log");
+
     open(IN,"RxData/$path/".Ghz18."_csv_sort.log");
 
    while (<IN>) {
        chomp;
        $_ =(split / /,$_)[1];  
        $_= $stride*int($_/$stride);
+       $_ = 0 if($_ >0);
        $result->{$_}++;
    } 
    close IN;
@@ -53,12 +56,14 @@ sub sumGhz18 {
 sub sumGhz26 {
     my($path,$result) = @_;
 
+    return if(! -e "RxData/$path/".Ghz26."_csv_sort.log");
     open(IN,"RxData/$path/".Ghz26."_csv_sort.log");
 
    while (<IN>) {
        chomp;
         $_ =(split / /,$_)[1];
         $_=$stride*int($_/$stride);
+        $_ = 0 if($_ >0);
         $result->{$_}++;
     }
     close IN;
