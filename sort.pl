@@ -33,7 +33,13 @@ sub count{
    
 
     if(! -e "RxData/".$path."/"."$Ghz"."_csv.log"){
+    my $tmp = "RxData/".$path."/"."$Ghz"."_csv_sort.log";
+        return if(! -d "RxData/".$path);
+        open(OUT,">","$tmp");
+        printf(OUT "%s %s\n",0,0);
+        close(OUT);
         return;
+
     }
 
     open(IN,"RxData/".$path."/"."$Ghz"."_csv.log");
@@ -41,14 +47,13 @@ sub count{
     my $goal=0;
     my $sum=0;
     my $count=0;
+    my $hourCount = 0;
 
     my ($hour,$min,$second,$level) = (0,0,0,0);
     my ($f_hour,$f_min,$f_second,$f_level) = (0,0,0,0);
 
     while(<IN>){
         chomp;
-    #    if($_ eq "HOST NAME : Undefined Host  IP ADDRESS : 192.168.100.9"){ next;}
-    #    if($_ eq "time, 1803_RX_LEVEL, 1803_TX_POWER, 1803_BER"){ next;}
         next if($. eq 1..2);
         
         ($hour,$min,$second,$level) = split /\:|\,/,$_;
@@ -61,7 +66,11 @@ sub count{
 
         if($count == 0){ 
 
-        $f_hour = $hour;
+        
+        if($f_hour != $hour){
+            $f_hour = $hour;
+            $hourCount++;
+        }
         $f_min = $min;
         $f_second = $second;
         $goal = $f_second +8;
@@ -73,9 +82,7 @@ sub count{
         $sum+=$level;
 
         if($goal <= $second){
-    #        print "$goal\n";
-    #        print "$second\n";
-         $sum /=($count+1);
+           $sum /=($count+1);
 
          if($flag == 1){
             
@@ -95,6 +102,15 @@ sub count{
     }
 
     close(IN);
+
+    if($hourCount < 12 ){
+        my $tmp = "RxData/".$path."/"."$Ghz"."_csv_sort.log";
+        open(OUT,">$tmp");
+        printf(OUT "%s %s\n",0,0);
+        close(OUT);
+        return;
+
+    }
     my $tmp = "RxData/".$path."/"."$Ghz"."_csv_sort.log";
     open(OUT,"> $tmp");
 
