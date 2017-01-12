@@ -14,6 +14,9 @@ use constant directory =>(200906,200910,200911,200912);
 
 my $sumGhz18 = {};
 my $sumGhz26 = {};
+my $numGhz18 = 0;
+my $numGhz26 = 0;
+
 
 my $stride = 1;
 
@@ -32,6 +35,12 @@ for my $roop (directory){
     }
 }
 
+my $MaxGhz18 = &makeSum($sumGhz18);
+my $MaxGhz26 = &makeSum($sumGhz26);
+    &makePers($sumGhz18,$MaxGhz18);
+    &makePers($sumGhz26,$MaxGhz26);
+
+
 print Dumper $sumGhz18;
 print Dumper $sumGhz26;
 
@@ -49,6 +58,7 @@ sub sumGhz18 {
        $_= $stride*int($_/$stride);
        $_ = 0 if($_ >0);
        $result->{$_}++;
+       $numGhz18++;
    } 
    close IN;
 }
@@ -65,7 +75,34 @@ sub sumGhz26 {
         $_=$stride*int($_/$stride);
         $_ = 0 if($_ >0);
         $result->{$_}++;
+        $numGhz26++;
     }
     close IN;
 
+}
+
+sub makeSum {
+    my ($result) = @_;
+    
+    my $before =0;
+
+    for my $key(sort {$a <=> $b} keys %$result){
+       if($before ==0){
+          $before= $result->{$key};
+          next;
+       }
+        $result->{$key}+=$before;
+        $before =$result->{$key};
+    }
+
+    return $before;
+}
+
+sub makePers {
+
+    my($result,$sum) =@_;
+
+    for my $key(sort {$b <=> $a} keys %$result){
+        $result->{$key}=sprintf("%.5f",$result->{$key}/=$sum)
+    }
 }
